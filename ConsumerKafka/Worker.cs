@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,6 +46,11 @@ namespace ConsumerKafka
                         Console.WriteLine(consumeResult.Message.Key);
                         Console.WriteLine(consumeResult.Message.Value);
                         Console.WriteLine(consumeResult.Offset);
+
+                        var message = JsonSerializer.Deserialize<KafkaMessage>(consumeResult.Message.Value);
+                        Console.WriteLine(message.Id);
+                        Console.WriteLine(message.Name);
+
                     }
 
                     consumer.Close();
